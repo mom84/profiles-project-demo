@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Profile</title>
+</head>
+<body>
+<table id="customers" align="center">
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>email</th>
+        <th>phone</th>
+        <th>address</th>
+        <th>specialization</th>
+        <th>companies</th>
+    </tr>
+    </thead>
+    <tbody>
+    <h2 style="text-align: center">The Profile</h2>
+    <tr th:each="list : ${participants}">
+        <td th:text="${list.name}">name</td>
+        <td th:text="${list.email}">email</td>
+        <td th:text="${list.phone}">phone</td>
+        <td th:text="${list.address}">address</td>
+        <td th:text="${list.specialization}">specialization</td>
+        <td th:text="${list.showCompanyName()}">specialization</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+<form th:action="@{/addParticipant}" th:method="post">
+    <td><button type="submit">Back To Participants</button></td>
+</form>
+</html>

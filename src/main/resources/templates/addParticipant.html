@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Home</title>
+</head>
+<body>
+<h1 class="adding">Add Participant</h1>
+<form th:action="@{/addParticipant}" th:object="${newParticipant}" method="post">
+    name: <input type="text" th:field="*{name}" />
+    email: <input type="text" th:field="*{email}" />
+    phone: <input type="text" th:field="*{phone}" />
+    address: <input type="text" th:field="*{address}" />
+    specialization: <input type="text" th:field="*{specialization}" />
+    <input type="submit" value="Add Participant">
+</form>
+
+</body>
+</html>

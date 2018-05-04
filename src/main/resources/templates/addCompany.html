@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Registration</title>
+</head>
+<body>
+<!--
+<form th:action="@{/addCompany}" th:object="${newCompany}" method="post">
+    name: <input type="text" th:field="*{name}" />
+    username: <input type="text" th:field="*{username}" />
+    password: <input type="text" th:field="*{password}" />
+    email: <input type="text" th:field="*{email}" />
+    <button type="submit">Submit</button>
+</form>
+-->
+<h1>Company Registration</h1>
+<form th:action="@{/addCompany}" method="post">
+    name: <input type="text" name="name" />
+    username: <input type="text" name="username" />
+    password: <input type="password" name="password" />
+    email: <input type="text" name="email" />
+    <input type="submit" value="Add Company">
+</form>
+
+
+</body>
+</html>

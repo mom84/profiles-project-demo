@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Participant</title>
+</head>
+<body>
+<h1><span th:text="${loggedUserName}">Lidia</span></h1>
+<table id="customers" align="center">
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>email</th>
+        <th>phone</th>
+        <th>address</th>
+        <th>specialization</th>
+        <th>companies</th>
+        <th>like</th>
+        <th>dislike</th>
+        <th>profile</th>
+    </tr>
+    </thead>
+    <tbody>
+    <h2 style="text-align: center">The Participants of RefugeesCode</h2>
+    <tr th:each="list : ${allList}">
+        <td th:text="${list.name}">name</td>
+        <td th:text="${list.email}">email</td>
+        <td th:text="${list.phone}">phone</td>
+        <td th:text="${list.address}">address</td>
+        <td th:text="${list.specialization}">specialization</td>
+        <td th:text="${list.showCompanyName()}">specialization</td>
+
+        <form th:action="@{/like}" th:method="post">
+            <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
+            <td><button type="submit" th:disabled="${list.like}">Like</button></td>
+
+        </form>
+        <form th:action="@{/dislike}" th:method="Delete">
+            <td style="display:none"><input type="text" name="idCompany" th:value="${list.showCompanyId()}"/></td>
+            <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
+            <td><button type="submit" th:disabled="${list.dislike}">Dislike</button></td>
+        </form>
+        <form th:action="@{/profile}" th:method="post">
+            <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
+            <td><button type="submit" >GO Profile</button></td>
+        </form>
+
+    </tr>
+
+    </tbody>
+</table>
+<br>
+<br>
+<form style="display:inline" th:action="@{/registration}"  method="post">
+        <input type="submit" value="add Company"/>
+</form>
+
+<form style="display:inline" th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<form style="display:inline" th:action="@{/login}" method="post">
+    <input type="submit" value="login"/>
+</form>
+<form style="display:inline" th:action="@{/}" method="post">
+    <input type="submit" value="New Participant"/>
+</form>
+</body>
+</html>
