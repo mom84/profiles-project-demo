@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <object th:include="fragments/resources :: head" th:remove="tag"></object>
     <title>Home</title>
 </head>
 <body>
+
+<header>
+    <object th:include="fragments/navigation :: menu" th:remove="tag"></object>
+</header>
 <h1 class="adding">Add Participant</h1>
 <form th:action="@{/addParticipant}" th:object="${newParticipant}" method="post">
     name: <input type="text" th:field="*{name}" />
@@ -16,5 +21,6 @@
     <input type="submit" value="Add Participant">
 </form>
 
+<object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package at.refugeescode.profilesprojectdemo.security;
 
-import at.refugeescode.profilesprojectdemo.Admin;
+import at.refugeescode.profilesprojectdemo.persistance.model.Admin;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

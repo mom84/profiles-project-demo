@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <object th:include="fragments/resources :: head" th:remove="tag"></object>
     <title>Participant</title>
 </head>
 <body>
+
+<header>
+    <object th:include="fragments/navigation :: menu" th:remove="tag"></object>
+</header>
+<br>
+<br>
+<br>
 <h1><span th:text="${loggedUserName}">Lidia</span></h1>
 <table id="customers" align="center">
     <thead>
@@ -65,5 +73,6 @@
 <form style="display:inline" th:action="@{/}" method="post">
     <input type="submit" value="New Participant"/>
 </form>
+<object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>
 </html>

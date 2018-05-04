@@ -1,8 +1,7 @@
 package at.refugeescode.profilesprojectdemo.security;
 
-import at.refugeescode.profilesprojectdemo.Admin;
-import at.refugeescode.profilesprojectdemo.AdminRepository;
-import at.refugeescode.profilesprojectdemo.Company;
+import at.refugeescode.profilesprojectdemo.persistance.model.Admin;
+import at.refugeescode.profilesprojectdemo.persistance.repository.AdminRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

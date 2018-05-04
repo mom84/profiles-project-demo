@@ -1,7 +1,9 @@
-package at.refugeescode.profilesprojectdemo;
+package at.refugeescode.profilesprojectdemo.persistance.model;
+import at.refugeescode.profilesprojectdemo.persistance.repository.AdminRepository;
+import at.refugeescode.profilesprojectdemo.persistance.repository.CompanyRepository;
+import at.refugeescode.profilesprojectdemo.persistance.repository.ProfilesRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -141,13 +143,7 @@ public class ProfilesEndpoint {
         if (participant.isPresent()) {
             Optional<Company> CompanyUsername = companyRepository.findOneByUsername(principal.getName());
             if (CompanyUsername.isPresent()) {
-                if(participant.get().getCompanyList().contains(CompanyUsername.get())){
                     participant.get().addCompany(CompanyUsername.get());
-                    participant.get().removeCompany(CompanyUsername.get());
-                }
-                else{
-                    participant.get().addCompany(CompanyUsername.get());
-                }
                 //participant.get().setLike(true);
                 //participant.get().setDislike(false);
                 companyRepository.save(CompanyUsername.get());
@@ -159,12 +155,10 @@ public class ProfilesEndpoint {
 
     @DeleteMapping("dislike")
     String dislike(@RequestParam String idCompany , @RequestParam String idParticipant,Principal principal){
-        //Optional<Company> company = companyRepository.findById(Long.valueOf(idCompany));
         Optional<Participant> participant = profilesRepository.findById(Long.valueOf(idParticipant));
         Optional<Company> company = companyRepository.findOneByUsername(principal.getName());
         if(company.isPresent()){
             if(participant.get().getCompanyList().contains(company.get())) {
-                System.out.println(participant.get().getCompanyList());
                 participant.get().removeCompany(company.get());
             }
             //participant.get().setLike(false);

@@ -1,7 +1,7 @@
-package at.refugeescode.profilesprojectdemo;
+package at.refugeescode.profilesprojectdemo.persistance.model;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -31,7 +31,7 @@ public class Participant {
 
     //@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Company> companyList;
+    private Set<Company> companyList;
 
 
     public Participant() {
@@ -107,11 +107,11 @@ public class Participant {
 
 
 
-    public List<Company> getCompanyList() {
+    public Set<Company> getCompanyList() {
         return companyList;
     }
 
-    public void setCompanyList(List<Company> companyList) {
+    public void setCompanyList(Set<Company> companyList) {
         this.companyList = companyList;
     }
 

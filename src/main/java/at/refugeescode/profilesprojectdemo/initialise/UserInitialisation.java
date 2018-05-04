@@ -1,9 +1,9 @@
 package at.refugeescode.profilesprojectdemo.initialise;
 
-import at.refugeescode.profilesprojectdemo.Admin;
-import at.refugeescode.profilesprojectdemo.AdminRepository;
-import at.refugeescode.profilesprojectdemo.Company;
-import at.refugeescode.profilesprojectdemo.CompanyRepository;
+import at.refugeescode.profilesprojectdemo.persistance.model.Admin;
+import at.refugeescode.profilesprojectdemo.persistance.repository.AdminRepository;
+import at.refugeescode.profilesprojectdemo.persistance.model.Company;
+import at.refugeescode.profilesprojectdemo.persistance.repository.CompanyRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

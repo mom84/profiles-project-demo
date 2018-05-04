@@ -10,24 +10,28 @@
 <div th:fragment="menu">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position:fixed;top: 0;
   width: 100%;">
-        <a class="navbar-brand" th:href="@{/}">Dr.House</a>
+        <a class="navbar-brand" th:href="@{/}">Profiles</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}">Add Patient<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" th:href="@{/addParticipant}">Add Participant<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}">Participants<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/invoices}">Invoices</a>
+                    <a class="nav-link" th:href="@{/login}">LogIn</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/search}">Search</a>
+                    <a class="nav-link" th:href="@{/logout}">LogOut</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/statistic}">Statistic</a>
+                    <a class="nav-link" th:href="@{/addCompany}">Registration</a>
                 </li>
+
             </ul>
         </div>
     </nav>

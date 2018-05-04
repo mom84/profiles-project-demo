@@ -1,15 +1,12 @@
-package at.refugeescode.profilesprojectdemo;
+package at.refugeescode.profilesprojectdemo.persistance.model;
 
-
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Component
-public class Company {
+public class Admin {
 
     @Id
     @GeneratedValue
@@ -17,19 +14,13 @@ public class Company {
 
     private String name;
 
+    private String email;
+
+    private String phone;
+
     private String username;
 
     private String password;
-
-    private String email;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> authorities = new HashSet<>();
@@ -58,13 +49,6 @@ public class Company {
         this.authorities = authorities;
     }
 
-    public Company() {
-    }
-
-    public Company(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }
@@ -81,11 +65,19 @@ public class Company {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

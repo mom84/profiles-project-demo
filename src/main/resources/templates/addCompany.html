@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <object th:include="fragments/resources :: head" th:remove="tag"></object>
     <title>Registration</title>
 </head>
 <body>
+
+<header>
+    <object th:include="fragments/navigation :: menu" th:remove="tag"></object>
+</header>
 <!--
 <form th:action="@{/addCompany}" th:object="${newCompany}" method="post">
     name: <input type="text" th:field="*{name}" />
@@ -24,6 +29,6 @@
     <input type="submit" value="Add Company">
 </form>
 
-
+<object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>
 </html>
