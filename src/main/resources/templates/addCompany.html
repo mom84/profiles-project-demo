@@ -20,14 +20,49 @@
     <button type="submit">Submit</button>
 </form>
 -->
-<h1>Company Registration</h1>
-<form th:action="@{/addCompany}" method="post">
-    name: <input type="text" name="name" />
-    username: <input type="text" name="username" />
-    password: <input type="password" name="password" />
-    email: <input type="text" name="email" />
-    <input type="submit" value="Add Company">
+<br>
+<br>
+<br>
+<!--
+<center>
+    <div>
+        <h1>Company Registration</h1>
+        <form th:action="@{/addCompany}" th:object="${newCompany}" th:method="post">
+            name: <input type="text" th:field="*{name}" />
+            username: <input type="text" th:field="*{username}" />
+            password: <input type="password" th:field="*{password}" />
+            email: <input type="text" th:field="*{email}" />
+            <input type="submit" value="Add Company">
+        </form>
+    </div>
+</center>
+-->
+<form th:action="@{/addCompany}" th:object="${newCompany}" th:method="post" style="border:1px solid #ccc">
+    <div class="container">
+        <h1>Sign Up</h1>
+        <hr>
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" th:field="*{name}" required>
+
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" th:field="*{username}" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" th:field="*{password}" required>
+
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" th:field="*{email}" required>
+
+<center>
+    <div class="clearfix">
+        <button type="submit" class="signupbtn">Sign Up</button>
+    </div>
+</center>
+
+    </div>
 </form>
+
 
 <object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <object th:include="fragments/resources :: head" th:remove="tag"></object>
@@ -11,6 +12,8 @@
 <header>
     <object th:include="fragments/navigation :: menu" th:remove="tag"></object>
 </header>
+
+<!--
 <table id="customers" align="center">
     <thead>
     <tr>
@@ -31,14 +34,32 @@
         <td th:text="${list.address}">address</td>
         <td th:text="${list.specialization}">specialization</td>
         <td th:text="${list.showCompanyName()}">specialization</td>
+        <td> <img th:src="@{${'/images/' + list.image}}" height="120" width="150" /> </td>
     </tr>
     </tbody>
 </table>
-<form th:action="@{/addParticipant}" th:method="post">
-    <td><button type="submit">Back To Participants</button></td>
+<br>
+<form th:action="@{/}" th:method="GET">
+    <input type="submit" value="Back To Participants"/>
 </form>
+-->
+<br>
+<br>
+<br>
+<br>
+<div class="card" th:each="list : ${participants}">
+    <p><img th:src="@{${'/images/' + list.image}}" height="300" width="500" alt="John" style="width:100%"></p>
+    <h1 th:text="${list.name}">John Doe</h1>
+    <p class="title" th:text="${list.specialization}">CEO & Founder, Example</p>
+    <p>Refugees Code</p>
+    <a th:href="@{${list.github}}"><i class="fa fa-github"></i></a>
+
+    <form th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
+        <p style="display:none"><input type="text" name="id1" th:value="${list.id}"/></p>
+        <p><input type="submit" value="interested"></p>
+    </form>
+</div>
 <object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>
-
 
 </html>

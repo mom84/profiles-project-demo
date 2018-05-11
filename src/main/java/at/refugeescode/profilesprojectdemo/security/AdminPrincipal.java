@@ -12,6 +12,11 @@ public class AdminPrincipal implements UserDetails {
 
     private Admin admin;
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+
     public AdminPrincipal(Admin admin) {
         this.admin = admin;
     }

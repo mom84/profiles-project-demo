@@ -9,15 +9,18 @@
 
 </head>
 
-<body style="background-image: url('http://join.mercubuana.ac.id/images/login.png');background-repeat: no-repeat;
-    background-size: 700px 700px">
+<!--
+style="background-image: url('http://join.mercubuana.ac.id/images/login.png');background-repeat: no-repeat;
+background-size: 700px 700px"
+-->
+<body>
+<header>
+    <object th:include="fragments/navigation :: menu" th:remove="tag"></object>
+</header>
+<br>
+<br>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<!--
     <div >
         <div class="log4">
             <p th:if="${param.logout}" class="alert" style="color:red;font-size: large">You have been logged out</p>
@@ -35,13 +38,46 @@
             <input  type="password" name="password" placeholder="Password"/>
         </div>
             <br>
-            <div class="log3">
-                <button type="submit" id="login" value="Login" class="btn btn-primary" >Login</button>
+            <div >
+                <button type="submit" id="login" value="Login" class="btn btn-primary" style="width:90px; margin-left:900px">Login</button>
             </div>
-
         </form>
+        <br>
+        <div >
+            <form style="display:inline" action="/addCompany"  method="GET">
+                <button type="submit"  value="Register" class="btn btn-primary" style="width:90px; margin-left:900px">Register</button>
+            </form>
+        </div>
+
     </div>
 </div>
+-->
+
+<form name="form" th:action="@{/login}" method="POST">
+    <div class="imgcontainer">
+        <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+        <div>
+            <p th:if="${param.logout}" class="alert" style="color:red;font-size: large">You have been logged out</p>
+            <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
+        </div>
+
+
+            <div>
+                <label for="uname"><b>Username</b></label>
+                <input  type="text" name="username" value="" placeholder="Username" autofocus="autofocus" />
+                <label for="uname"><b>Username</b></label>
+                <input  type="password" name="password" placeholder="Password"/>
+            </div>
+            <br>
+            <div >
+                <button type="submit">Login</button>
+            </div>
+
+    </div>
+</form>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>

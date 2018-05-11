@@ -4,6 +4,7 @@ package at.refugeescode.profilesprojectdemo.persistance.model;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ public class Company {
     @GeneratedValue
     private Long id;
 
+    @NotEmpty
     private String name;
 
     private String username;

@@ -17,11 +17,23 @@ public class Participant {
 
     private String email;
 
+    private String github;
+
     private String phone;
 
     private String address;
 
     private String specialization;
+
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @Column(name = "column_name", columnDefinition = "BOOLEAN")
     private Boolean like;
@@ -105,8 +117,6 @@ public class Participant {
         this.address = address;
     }
 
-
-
     public Set<Company> getCompanyList() {
         return companyList;
     }
@@ -132,4 +142,13 @@ public class Participant {
         return   companyList.stream().map(company -> company.getId().toString())
                 .collect(Collectors.joining(", "));
     }
+
+    public String getGithub() {
+        return github;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
+    }
+
 }

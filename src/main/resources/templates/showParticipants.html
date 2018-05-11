@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en"  xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org"
+     >
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
@@ -14,65 +15,81 @@
 <br>
 <br>
 <br>
-<h1><span th:text="${loggedUserName}">Lidia</span></h1>
-<table id="customers" align="center">
-    <thead>
-    <tr>
-        <th>name</th>
-        <th>email</th>
-        <th>phone</th>
-        <th>address</th>
-        <th>specialization</th>
-        <th>companies</th>
-        <th>like</th>
-        <th>dislike</th>
-        <th>profile</th>
-    </tr>
-    </thead>
-    <tbody>
-    <h2 style="text-align: center">The Participants of RefugeesCode</h2>
-    <tr th:each="list : ${allList}">
-        <td th:text="${list.name}">name</td>
-        <td th:text="${list.email}">email</td>
-        <td th:text="${list.phone}">phone</td>
-        <td th:text="${list.address}">address</td>
-        <td th:text="${list.specialization}">specialization</td>
-        <td th:text="${list.showCompanyName()}">specialization</td>
+<h1><span th:text="${loggedCompanyName}">Lidia</span></h1>
+<h1><span th:text="${loggedAdminName}">Lidia</span></h1>
+<center>
+    <div>
+        <table id="customers" align="center">
+            <thead>
+            <tr>
 
-        <form th:action="@{/like}" th:method="post">
-            <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
-            <td><button type="submit" th:disabled="${list.like}">Like</button></td>
+                <th>name</th>
+                <th>email</th>
+                <th>phone</th>
+                <th sec:authorize="hasAuthority('USER')">address</th>
+                <th>specialization</th>
+                <th sec:authorize="hasAuthority('ADMIN')">companies that interested</th>
+                <th sec:authorize="hasAuthority('USER')">like</th>
+                <th sec:authorize="hasAuthority('USER')">dislike</th>
+                <th sec:authorize="hasAuthority('ADMIN')">edit</th>
+                <th sec:authorize="hasAuthority('ADMIN')">delete</th>
+                <th>profile</th>
+                <th>picture</th>
+            </tr>
+            </thead>
+            <tbody>
+            <h2 style="text-align: center">The Participants of RefugeesCode</h2>
+            <tr th:each="list : ${allList}">
+                <td th:text="${list.name}">name</td>
+                <td th:text="${list.email}">email</td>
+                <td th:text="${list.phone}">phone</td>
+                <td th:text="${list.address}" sec:authorize="hasAuthority('USER')">address</td>
+                <td th:text="${list.specialization}">specialization</td>
+                <td th:text="${list.showCompanyName()}" sec:authorize="hasAuthority('ADMIN')">specialization</td>
 
-        </form>
-        <form th:action="@{/dislike}" th:method="Delete">
-            <td style="display:none"><input type="text" name="idCompany" th:value="${list.showCompanyId()}"/></td>
-            <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
-            <td><button type="submit" th:disabled="${list.dislike}">Dislike</button></td>
-        </form>
-        <form th:action="@{/profile}" th:method="post">
-            <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
-            <td><button type="submit" >GO Profile</button></td>
-        </form>
+                <form th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
+                    <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
+                    <td><input type="submit" th:disabled="${list.like}" value="like"></td>
 
-    </tr>
+                </form>
+                <form th:action="@{/dislike}" th:method="Delete" sec:authorize="hasAuthority('USER')">
+                    <td style="display:none"><input type="text" name="idCompany" th:value="${list.showCompanyId()}"/></td>
+                    <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
+                    <td><input type="submit" th:disabled="${list.dislike}" value="Dislike"></td>
+                </form>
+                <form th:action="@{/update}" th:method="post"  sec:authorize="hasAuthority('ADMIN')">
+                    <td style="display:none"><input type="text" name="id" th:value="${list.id}"/></td>
+                    <td><input type="submit" value="Edit" ></td>
+                </form>
+                <form class="adding" th:action="@{/delete}" th:method="post" sec:authorize="hasAuthority('ADMIN')">
+                    <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
+                    <td><input type="submit" value="Delete"></td>
+                </form>
 
-    </tbody>
-</table>
+                <form th:action="@{/profile}" th:method="post">
+                    <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
+                    <td><input type="submit" value="Profile" ></td>
+                </form>
+                <td> <img th:src="@{${'/images/' + list.image}}" height="120" width="150" /> </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</center>
+
 <br>
 <br>
-<form style="display:inline" th:action="@{/registration}"  method="post">
-        <input type="submit" value="add Company"/>
-</form>
 
-<form style="display:inline" th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<form style="display:inline" th:action="@{/login}" method="post">
-    <input type="submit" value="login"/>
-</form>
-<form style="display:inline" th:action="@{/}" method="post">
-    <input type="submit" value="New Participant"/>
-</form>
+<center>
+    <div>
+        <form  th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+</center>
+
+
 <object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>
 </html>

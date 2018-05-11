@@ -11,16 +11,56 @@
 <header>
     <object th:include="fragments/navigation :: menu" th:remove="tag"></object>
 </header>
-<h1 class="adding">Add Participant</h1>
-<form th:action="@{/addParticipant}" th:object="${newParticipant}" method="post">
-    name: <input type="text" th:field="*{name}" />
-    email: <input type="text" th:field="*{email}" />
-    phone: <input type="text" th:field="*{phone}" />
-    address: <input type="text" th:field="*{address}" />
-    specialization: <input type="text" th:field="*{specialization}" />
-    <input type="submit" value="Add Participant">
+<br>
+<br>
+<br>
+
+<!--
+<center>
+        <form th:action="@{/addParticipant}" th:object="${newParticipant}" th:method="post" enctype="multipart/form-data">
+            <p><input type="file" name="file"></p>
+            name: <input type="text" th:field="*{name}" />
+            email: <input type="text" th:field="*{email}" />
+            github: <input type="text" th:field="*{github}" />
+            phone: <input type="text" th:field="*{phone}" />
+            address: <input type="text" th:field="*{address}" />
+            specialization: <input type="text" th:field="*{specialization}" />
+            <input type="submit" value="Add Participant">
+        </form>
+
+        <object th:include="fragments/resources :: bottom" th:remove="tag"></object>
+    </div>
+</center>
+-->
+
+
+<form th:action="@{/addParticipant}" th:object="${newParticipant}" th:method="post" enctype="multipart/form-data">
+    <div class="container">
+        <h1>Add Participant</h1>
+        <hr>
+        <label for="file"><b>Foto</b></label>
+        <input type="file" name="file" placeholder="Enter Foto">
+
+        <br>
+        <label style="display:block" for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" th:field="*{name}" required>
+
+        <label for="username"><b>Github Account</b></label>
+        <input type="text" th:field="*{github}" placeholder="Enter Github Account"/>
+
+        <label for="psw"><b>Specialization</b></label>
+        <input type="text" th:field="*{specialization}" placeholder="Enter Specialization"/>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" th:field="*{email}" required>
+
+        <center>
+            <div class="clearfix">
+                <button type="submit" class="signupbtn">Add</button>
+            </div>
+        </center>
+    </div>
 </form>
 
-<object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>
 </html>

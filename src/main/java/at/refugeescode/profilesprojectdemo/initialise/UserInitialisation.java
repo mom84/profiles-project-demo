@@ -18,17 +18,11 @@ public class UserInitialisation {
     @Bean
     ApplicationRunner initialiseUsers(PasswordEncoder passwordEncoder, CompanyRepository companyRepository, AdminRepository adminRepository) {
         return args -> {
-            Company company = new Company();
-            company.setUsername("user");
-           company.setPassword(passwordEncoder.encode("user"));
-           company.setAuthorities(Stream.of("USER").collect(Collectors.toSet()));
-           companyRepository.save(company);
-
-           Admin admin = new Admin();
-           admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("admin"));
-            admin.setAuthorities(Stream.of("ADMIN").collect(Collectors.toSet()));
-            adminRepository.save(admin);
+//           Admin admin = new Admin();
+//           admin.setUsername("admin");
+//            admin.setPassword(passwordEncoder.encode("admin"));
+//            admin.setAuthorities(Stream.of("ADMIN").collect(Collectors.toSet()));
+//            adminRepository.save(admin);
         };
     }
 }
