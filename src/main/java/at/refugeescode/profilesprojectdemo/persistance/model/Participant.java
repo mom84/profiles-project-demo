@@ -25,6 +25,8 @@ public class Participant {
 
     private String specialization;
 
+    private  String education;
+
     private String image;
 
     public String getImage() {
@@ -149,6 +151,14 @@ public class Participant {
 
     public void setGithub(String github) {
         this.github = github;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
     }
 
 }

@@ -89,6 +89,11 @@ public class ProfilesEndpoint {
         return "edit";
     }
 
+    @GetMapping("/demo")
+    String page7(){
+        return "demo";
+    }
+
 
 
     @ModelAttribute("allList")
@@ -125,6 +130,7 @@ public class ProfilesEndpoint {
 
 
     Participant participant1 = new Participant();
+
     @ModelAttribute("p")
     Participant editParticipant(){
         return  participant1;
@@ -195,7 +201,7 @@ public class ProfilesEndpoint {
     }
 
     @PostMapping("/edit")
-    public String updateParticipant(@RequestParam String name,@RequestParam String email,@RequestParam String phone , @RequestParam String address , @RequestParam String specialization ,  @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public String updateParticipant(@RequestParam String name,@RequestParam String github,@RequestParam String email,@RequestParam String phone , @RequestParam String address , @RequestParam String specialization ,  @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         if (!file.isEmpty()) {
             try {
                 String UPLOADED_FOLDER = "C:\\Users\\Mohammad\\Projects\\profiles-project-demo\\src\\main\\resources\\static\\images";
@@ -211,16 +217,17 @@ public class ProfilesEndpoint {
                 redirectAttributes.addFlashAttribute("flash.message","Failed to upload");
                 return "You failed to upload " + " => " + e.getMessage();
             }
-        } else {
-            return "You failed to upload " + " because the file was empty.";
         }
+//        else {
+//            return "You failed to upload " + " because the file was empty.";
+//        }
         participant1.setName(name);
         participant1.setAddress(address);
         participant1.setEmail(email);
         participant1.setSpecialization(specialization);
         participant1.setPhone(phone);
+        participant1.setGithub(github);
         profilesRepository.save(participant1);
-        System.out.println(participant1);
         return "redirect:/";
     }
 
@@ -259,13 +266,14 @@ public class ProfilesEndpoint {
             Optional<Company> CompanyUsername = companyRepository.findOneByUsername(principal.getName());
             if (CompanyUsername.isPresent()) {
                     participant.get().addCompany(CompanyUsername.get());
-                //participant.get().setLike(true);
-                //participant.get().setDislike(false);
+                participant.get().setLike(true);
+                participant.get().setDislike(false);
                 log.info("Spring Mail - Sending Email with Inline Attachment Example");
 
                 Mail mail = new Mail();
                 mail.setFrom("no-reply@memorynotfound.com");
                 mail.setTo("mohammadalmosleh66@gmail.com");
+                //mail.setTo(CompanyUsername.get().getEmail());
                 mail.setSubject("Sending Email with Inline Attachment Example");
                 mail.setContent( CompanyUsername.get().getName()+" is very interested in " + participant.get().getName());
                 emailService.sendSimpleMessage(mail);
@@ -292,8 +300,8 @@ public class ProfilesEndpoint {
             mail.setContent( company.get().getName()+" NOT interested in " + participant.get().getName()+" any more");
 
             emailService.sendSimpleMessage(mail);
-            //participant.get().setLike(false);
-            //participant.get().setDislike(true);
+            participant.get().setLike(false);
+            participant.get().setDislike(true);
             profilesRepository.save(participant.get());
         }
         return "redirect:/";

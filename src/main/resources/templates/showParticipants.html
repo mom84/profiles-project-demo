@@ -15,11 +15,23 @@
 <br>
 <br>
 <br>
+<br>
+<br>
+<!--
 <h1><span th:text="${loggedCompanyName}">Lidia</span></h1>
 <h1><span th:text="${loggedAdminName}">Lidia</span></h1>
+-->
+<br>
 <center>
     <div>
-        <table id="customers" align="center">
+        <h3 th:if="${#lists.isEmpty(allList)}">Welcome in Profile App</h3>
+    </div>
+</center>
+
+
+<center>
+    <div>
+        <table id="customers" th:if="${not #lists.isEmpty(allList)}" align="center">
             <thead>
             <tr>
 
@@ -38,7 +50,8 @@
             </tr>
             </thead>
             <tbody>
-            <h2 style="text-align: center">The Participants of RefugeesCode</h2>
+            <h2 style="text-align: center">The Participants of Refugees<span style="color:red">{Code}</span></h2>
+            <h4>coding school for integration</h4>
             <tr th:each="list : ${allList}">
                 <td th:text="${list.name}">name</td>
                 <td th:text="${list.email}">email</td>
@@ -49,13 +62,12 @@
 
                 <form th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
                     <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
-                    <td><input type="submit" th:disabled="${list.like}" value="like"></td>
-
+                    <td><input type="submit"  th:disabled="${list.like}" value="I'm Interested"></td>
                 </form>
                 <form th:action="@{/dislike}" th:method="Delete" sec:authorize="hasAuthority('USER')">
                     <td style="display:none"><input type="text" name="idCompany" th:value="${list.showCompanyId()}"/></td>
                     <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
-                    <td><input type="submit" th:disabled="${list.dislike}" value="Dislike"></td>
+                    <td><input type="submit" th:disabled="${list.dislike}" value="I'm not Interested"></td>
                 </form>
                 <form th:action="@{/update}" th:method="post"  sec:authorize="hasAuthority('ADMIN')">
                     <td style="display:none"><input type="text" name="id" th:value="${list.id}"/></td>
@@ -70,7 +82,7 @@
                     <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
                     <td><input type="submit" value="Profile" ></td>
                 </form>
-                <td> <img th:src="@{${'/images/' + list.image}}" height="120" width="150" /> </td>
+                <td > <img  th:src="@{${'/images/' + list.image}}" height="150px" width="220px" /> </td>
             </tr>
 
             </tbody>
@@ -81,6 +93,7 @@
 <br>
 <br>
 
+<!--
 <center>
     <div>
         <form  th:action="@{/logout}" method="post">
@@ -88,7 +101,7 @@
         </form>
     </div>
 </center>
-
+-->
 
 <object th:include="fragments/resources :: bottom" th:remove="tag"></object>
 </body>

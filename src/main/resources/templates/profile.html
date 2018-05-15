@@ -1,65 +1,492 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <object th:include="fragments/resources :: head" th:remove="tag"></object>
-    <title>Profile</title>
+    <title>demo</title>
+    <style>
+
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: inherit;
+    font-size: 16px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: #000;
+}
+
+a:link {
+    text-decoration: underline;
+    color: #000;
+    font-weight: bold;
+}
+
+a:visited {
+    text-decoration: underline;
+    color: #000;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #669933;
+    font-weight: bold;
+}
+
+a:active {
+    text-decoration: underline;
+    color: #000;
+    font-weight: bold;
+}
+
+#wrapper    {
+    width: 965px;
+    margin: 0 auto;
+}
+
+#content {
+    background-color: #eee;
+    width: 960px;
+    text-align: left;
+    overflow: auto;
+    position: relative;
+    margin: 25px 0px 25px 0px;
+    border: #fff solid 2px;
+}
+
+.clear  {
+    float: none;
+    clear: both;
+    margin: 20px 0px 20px 0px;
+}
+
+
+/* Header
+--------------------------------------------------- */
+
+
+#contact-details .header_1 {
+    float: left;
+    width: 350px;
+    text-align: center;
+    margin: 40px 0px 0px 20px;
+}
+
+#contact-details .header_1 img {
+    border: #fff solid 4px;
+    background: url("../images/bg_img_dark_green.png");
+    padding: 16px;
+    margin: 10px 0px 0px 0px;
+}
+
+#contact-details .header_2 {
+    float: left;
+    width: 570px;
+    margin: 40px 0px 0px 10px;
+}
+
+#contact-details .header_2 a {
+    font-weight: normal;
+}
+
+#contact-details  h1    {
+    margin: 50px;
+    font-size: 47px;
+    font-weight: bold;
+}
+
+#contact-details  h3    {
+    margin: 0px 0px 32px 20px;
+    font-size: 30px;
+    font-weight: bold;
+    font-style: italic;
+     text-align: center;
+}
+
+#contact-details ul.info_1  {
+    list-style: none;
+    margin: 0px 0px 0px -12px;
+    font-size: 18px;
+}
+
+#contact-details ul.info_2  {
+    list-style: none;
+    margin: 0px 0px 15px -12px;
+    font-size: 18px;
+}
+
+#contact-details li.address {
+    background: url("../images/home.png") no-repeat;
+    background-position: 0px 0px;
+    padding: 0px 0px 12px 40px;
+}
+
+#contact-details li.phone   {
+    background: url("../images/phone.png") no-repeat;
+    background-position: 0px 0px;
+    padding: 0px 0px 12px 40px;
+}
+
+#contact-details li.email   {
+    background: url("../images/mail.png") no-repeat;
+    background-position: 0px 0px;
+    padding: 0px 0px 12px 40px;
+}
+
+#contact-details li.site_url    {
+    background: url("../images/computer.png") no-repeat;
+    background-position: 0px 2px;
+    padding: 0px 0px 12px 40px;
+}
+
+#contact-details li.twitter {
+    background: url("../images/twitter_sm.png") no-repeat;
+    background-position: 0px 0px;
+    padding: 0px 0px 12px 40px;
+}
+
+
+
+/* Main Content
+--------------------------------------------------- */
+
+h2.top  {
+    margin: 0px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+h2  {
+    margin: 40px 0px 0px 0px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+dl  {
+    margin: 0px 50px 0px 0px;
+}
+
+
+dt  {
+    float: left;
+    width: 200px;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    text-align: right;
+}
+
+dd  {
+    width: 620px;
+    float: right;
+    margin-right: 20px;
+}
+
+dl#contact  {
+    margin: 0px;
+}
+
+dt#contact  {
+    margin: 0px;
+}
+
+dd#contact  {
+    margin: 0px;
+}
+
+p.bus1  {
+    margin: 0px;
+    font-weight: bold;
+    color: #669933;
+}
+
+p.edu-info  {
+    margin: 10px 0px 0px 0px;
+    font-weight: bold;
+    color: #669933;
+}
+
+p.edu-info a    {
+    color: #000;
+}
+
+p.edu-info a:hover  {
+    color: #669933;
+}
+
+p.time  {
+    margin: 0px;
+}
+
+p.summary   {
+    margin: 10px 0px 0px 0px;
+}
+
+
+#skills ul.list1    {
+    float: left;
+    list-style: none;
+    margin: 0px 0px 0px -40px;
+    width: 220px;
+}
+
+#skills ul.list2    {
+    float: left;
+    list-style: none;
+    margin: 0px 0px 0px 0px;
+    width: 220px;
+}
+
+#skills li {
+    background: url("../images/bullet_green.png") no-repeat;
+    background-position: 0px 2px;
+    padding: 0px 0px 0px 25px;
+}
+
+abbr    {
+    border-width: 0px;
+}
+
+
+/* Footer
+--------------------------------------------------- */
+
+#footer {
+    margin: 60px 40px 0px 40px;
+}
+
+#footer img {
+    border: 0px;
+}
+
+#footer .footer_content {
+    width: 700px;
+    overflow: auto;
+    margin: auto;
+    border: #fff solid 2px;
+    background-color: #dcdcdc;
+}
+
+#footer ul.icons_1  {
+    float: left;
+    width: 525px;
+    margin: 15px 10px 10px 15px;
+    padding: 0px;
+}
+
+#footer ul.icons_2  {
+    float: right;
+    width: 100px;
+    margin: 10px 20px 10px 10px;
+    padding: 0px;
+}
+
+#footer .icons_1 li, #footer .icons_2 li {
+    margin: 0px 0px 0px 7px;
+    padding: 0px;
+    list-style-type: none;
+    display: inline;
+}
+
+#footer a   {
+    color: #000;
+}
+
+#footer a:hover {
+    color: #669933;
+}
+
+#footer .credits {
+    float: none;
+    clear: both;
+    margin: 10px 0px 20px 0px;
+    font-size: 12px;
+    text-align: center;
+}
+
+#footer .credits a  {
+    font-weight: normal;
+}
+    </style>
 </head>
-<body>
 
-<header>
-    <object th:include="fragments/navigation :: menu" th:remove="tag"></object>
-</header>
+<!-- Begin Wrapper -->
+<div id="wrapper">
 
-<!--
-<table id="customers" align="center">
-    <thead>
-    <tr>
-        <th>name</th>
-        <th>email</th>
-        <th>phone</th>
-        <th>address</th>
-        <th>specialization</th>
-        <th>companies</th>
-    </tr>
-    </thead>
-    <tbody>
-    <h2 style="text-align: center">The Profile</h2>
-    <tr th:each="list : ${participants}">
-        <td th:text="${list.name}">name</td>
-        <td th:text="${list.email}">email</td>
-        <td th:text="${list.phone}">phone</td>
-        <td th:text="${list.address}">address</td>
-        <td th:text="${list.specialization}">specialization</td>
-        <td th:text="${list.showCompanyName()}">specialization</td>
-        <td> <img th:src="@{${'/images/' + list.image}}" height="120" width="150" /> </td>
-    </tr>
-    </tbody>
-</table>
-<br>
-<form th:action="@{/}" th:method="GET">
-    <input type="submit" value="Back To Participants"/>
-</form>
--->
-<br>
-<br>
-<br>
-<br>
-<div class="card" th:each="list : ${participants}">
-    <p><img th:src="@{${'/images/' + list.image}}" height="300" width="500" alt="John" style="width:100%"></p>
-    <h1 th:text="${list.name}">John Doe</h1>
-    <p class="title" th:text="${list.specialization}">CEO & Founder, Example</p>
-    <p>Refugees Code</p>
-    <a th:href="@{${list.github}}"><i class="fa fa-github"></i></a>
+    <!-- Begin Content Area -->
+    <div id="content">
 
-    <form th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
-        <p style="display:none"><input type="text" name="id1" th:value="${list.id}"/></p>
-        <p><input type="submit" value="interested"></p>
-    </form>
+        <!-- Begin Header -->
+        <header>
+
+            <!-- Begin Contact Section -->
+            <section id="contact-details">
+
+                <!-- Begin Profile Image Section -->
+                <div class="header_1"  th:each="list : ${participants}">
+                    <img th:src="@{${'/images/' + list.image}}" height="300" width="400"  style="width:100%" alt="Your Name" />
+                </div>
+                <!-- End Profile Image Section -->
+
+                <!-- Begin Profile Information Section -->
+                <div class="header_2" th:each="list : ${participants}">
+
+                    <h1><span th:text="${list.name}">Your Name</span></h1>
+                    <h3 th:text="${list.specialization} + ' Developer'">Web Developer</h3>
+
+                    <ul class="info_1">
+                        <li class="address" th:text="${list.address}">555 Street Address, Toledo, Ohio, 43606  U.S.A.</li>
+                    </ul>
+
+                    <ul class="info_2">
+                        <li class="phone" th:text="${list.phone}">(000) 000-0000</li>
+                        <li class="email" ><a th:href="${list.github}" >Github Account</a></li>
+                        <li class="twitter" th:text="${list.email}"><a href="http://twitter.com/twitter-screen-name" title="Follow Me on Twitter">@twitter-screen-name</a></li>
+                    </ul>
+
+                </div>
+                <!-- End Profile Information Section -->
+
+            </section>
+            <!-- End Contact Section -->
+
+        </header>
+        <!-- End Header -->
+
+        <div class="clear">&nbsp;</div>
+
+        <!-- Begin Profile Section -->
+        <dl>
+            <dt>Profile:</dt>
+            <dd>
+
+                <section class="summary">
+                    I am a Junior software developer specializing in Java. I had previously worked in Syria as a Petroleum Engineer. A determined problem-solver, I enjoy being challenged and aim to apply my skills to creating innovative software solutions.
+                </section>
+
+            </dd>
+        </dl>
+        <!-- End Profile Section -->
+
+        <div class="clear">&nbsp;</div>
+
+        <!-- Begin Skills Section -->
+
+        <dl>
+            <dt>Skills:</dt>
+            <dd>
+
+                <section id="skills">
+                    <ul class="list1">
+                        <li>HTML5</li>
+                        <li>PHP</li>
+                        <li>Java</li>
+                        <li>WordPress</li>
+                    </ul>
+                </section>
+
+            </dd>
+        </dl>
+
+        <!-- End Skills Section -->
+
+        <div class="clear">&nbsp;</div>
+
+        <!-- Begin Experience Section -->
+        <dl>
+            <dt>Experience:</dt>
+
+            <dd>
+
+                <section id="experience">
+
+                    <!-- Position #1 -->
+
+                    <h2 class="top">Web Developer / Designer</h2>
+                    <p class="bus1">Company Name 1</p>
+                    <p class="time">February 2009 &#45; Present</p>
+
+                    <p>
+                        Senior Operator
+                        	In charge of a frictionless and safe production process.
+                        	Overall observation and troubleshooting of production.
+                    </p>
+                </section>
+
+            </dd>
+        </dl>
+        <!-- End Experience Section -->
+
+
+        <div class="clear">&nbsp;</div>
+
+        <!-- Begin Education Section -->
+        <dl>
+            <dt>Education:</dt>
+            <dd>
+
+                <section id="education"  th:each="list : ${participants}">
+                    <p class="bus1" th:text="${list.education}">University of Toledo</p>
+
+                    2801 Bancroft Street
+                    <br />
+                    Toledo, Ohio, 43606  U.S.A.
+
+                    <p class="summary">Web Design</p>
+                    <p class="time">2003 &#45; 2005</p>
+
+                    <p class="edu-info">
+                        <a href="http://www.utoledo.edu/" target="_blank" title="University of Toledo">www.utoledo.edu</a>
+                    </p>
+
+                </section>
+
+            </dd>
+        </dl>
+        <!-- End Education Section -->
+
+        <div class="clear">&nbsp;</div>
+
+
+        <!-- Begin Footer -->
+
+        <footer id="footer">
+
+            <!-- Begin Footer Content -->
+            <div class="footer_content">
+
+                <!-- Begin Schema Person -->
+                <!--
+                <ul class="icons_1">
+                    <li><a href="https://profiles.google.com/jwagner719" title="Google Profile"><img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32" alt="Google Profile"></a></li>
+                    <li><a href="http://dribbble.com/" title="Dribbble"><img src="images/dribbble.png" width="32" height="32" alt="Dribbble" /></a></li>
+                    <li><a href="http://www.linkedin.com/" title="LinkedIn"><img src="images/linkedin.png" width="32" height="32" alt="LinkedIn" /></a></li>
+                    <li><a href="http://www.facebook.com/" title="Facebook"><img src="images/facebook.png" width="32" height="32" alt="Facebook" /></a></li>
+                    <li><a href="http://www.flickr.com/" title="Flickr"><img src="images/flickr.png" width="32" height="32" alt="Flickr" /></a></li>
+                    <li><a href="http://twitter.com/" title="Follow Me on Twitter!"><img src="images/twitter.png" width="32" height="32" alt="Follow Me on Twitter!" /></a></li>
+                </ul>
+
+                <ul class="icons_2">
+                    <li><a href="resume.pdf" title="Download Resume PDF"><img src="images/download.png" width="48" height="48" alt="Download Resume PDF" /></a></li>
+                </ul>
+            -->
+                <!-- End Schema Person -->
+
+            </div>
+            <!-- End Footer Content -->
+
+            <div class="credits">
+                Copy Right by <a href="http://www.refugeescode.at/" target="_blank" title="RefugeesCode">Mohammad Almosleh</a>
+            </div>
+
+        </footer>
+        <!-- End Footer -->
+
+    </div>
+    <!-- End Content -->
+
 </div>
-<object th:include="fragments/resources :: bottom" th:remove="tag"></object>
-</body>
+<!-- End Wrapper -->
 
+</body>
 </html>
