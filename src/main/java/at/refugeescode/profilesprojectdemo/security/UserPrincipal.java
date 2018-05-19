@@ -16,6 +16,8 @@ public class UserPrincipal implements UserDetails {
         return company;
     }
 
+    public UserPrincipal() {
+    }
 
     public UserPrincipal(Company company) {
         this.company = company;

@@ -50,7 +50,7 @@
             </tr>
             </thead>
             <tbody>
-            <h2 style="text-align: center">The Participants of Refugees<span style="color:red">{Code}</span></h2>
+            <h2 style="text-align: center">The Participants of refugees<span style="color:red">{code}</span></h2>
             <h4>coding school for integration</h4>
             <tr th:each="list : ${allList}">
                 <td th:text="${list.name}">name</td>
@@ -58,17 +58,29 @@
                 <td th:text="${list.phone}">phone</td>
                 <td th:text="${list.address}" sec:authorize="hasAuthority('USER')">address</td>
                 <td th:text="${list.specialization}">specialization</td>
+
+               <!--
                 <td th:text="${list.showCompanyName()}" sec:authorize="hasAuthority('ADMIN')">specialization</td>
 
-                <form th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
-                    <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
-                    <td><input type="submit"  th:disabled="${list.like}" value="I'm Interested"></td>
-                </form>
+                <div   th:if="${list.isLike}=='false'" >
+                </div>
+                 -->
+
+                    <form th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
+                        <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
+                        <td><input type="submit"  th:text="${#lists.contains(list.companyList)}" value="I'm Interested"></td>
+                    </form>
+
+                <!--
+                <div   th:if="${list.isLike}=='true'" >
+                </div>
+                -->
                 <form th:action="@{/dislike}" th:method="Delete" sec:authorize="hasAuthority('USER')">
                     <td style="display:none"><input type="text" name="idCompany" th:value="${list.showCompanyId()}"/></td>
                     <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
                     <td><input type="submit" th:disabled="${list.dislike}" value="I'm not Interested"></td>
                 </form>
+
                 <form th:action="@{/update}" th:method="post"  sec:authorize="hasAuthority('ADMIN')">
                     <td style="display:none"><input type="text" name="id" th:value="${list.id}"/></td>
                     <td><input type="submit" value="Edit" ></td>
@@ -84,7 +96,6 @@
                 </form>
                 <td > <img  th:src="@{${'/images/' + list.image}}" height="150px" width="220px" /> </td>
             </tr>
-
             </tbody>
         </table>
     </div>

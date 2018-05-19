@@ -1,4 +1,5 @@
 package at.refugeescode.profilesprojectdemo.persistance.model;
+import at.refugeescode.profilesprojectdemo.persistance.mapper.ParticipantMapper;
 import at.refugeescode.profilesprojectdemo.persistance.repository.AdminRepository;
 import at.refugeescode.profilesprojectdemo.persistance.repository.CompanyRepository;
 import at.refugeescode.profilesprojectdemo.persistance.repository.ProfilesRepository;
@@ -7,6 +8,7 @@ import at.refugeescode.profilesprojectdemo.security.UserPrincipal;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,13 +52,14 @@ public class ProfilesEndpoint {
     private Participant participant;
 
 
-    public ProfilesEndpoint(ProfilesRepository profilesRepository, CompanyRepository companyRepository, AdminRepository adminRepository, EmailService emailService, PasswordEncoder passwordEncoder, Participant participant, List<Participant> participants) {
+    public ProfilesEndpoint( ProfilesRepository profilesRepository, CompanyRepository companyRepository, AdminRepository adminRepository, EmailService emailService, PasswordEncoder passwordEncoder, Participant participant, List<Participant> participants) {
         this.profilesRepository = profilesRepository;
         this.companyRepository = companyRepository;
         this.adminRepository = adminRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.participants = participants;
+
     }
 
     @GetMapping("/")
@@ -95,11 +99,43 @@ public class ProfilesEndpoint {
     }
 
 
-
-    @ModelAttribute("allList")
+       @ModelAttribute("allList")
     List<Participant> getAllParticipant(){
-      return profilesRepository.findAll();
-    }
+       return profilesRepository.findAll();
+   }
+
+//    @ModelAttribute("allList")
+//    List<ParticipantMapper> getAllParticipant(){
+//         List<Participant> all= profilesRepository.findAll();
+//         return all.stream().map(p-> converttoMapper(p)).collect(Collectors.toList());
+//    }
+//
+//    private ParticipantMapper converttoMapper(Participant p) {
+//
+//        ParticipantMapper participantMapper = new ParticipantMapper();
+//        UserPrincipal userPrincipal = new UserPrincipal();
+//
+//        participantMapper.setId(p.getId());
+//        participantMapper.setName(p.getName());
+//        participantMapper.setEmail(p.getEmail());
+//        participantMapper.setAddress(p.getAddress());
+//        participantMapper.setEducation(p.getEducation());
+//        participantMapper.setImage(p.getImage());
+//        Stream<Company> stream = p.getCompanyList().stream();
+//        System.out.println("sssssssssssss"+ userPrincipal.getCompany());
+//
+//            long count = stream.filter(company -> company.getName().equalsIgnoreCase(userPrincipal.getCompany().getName())).count();
+//            System.out.println("ggggggggggggggggggg");
+//            if (count == 0) {
+//                System.out.println("000000000000000000000000000000");
+//                participantMapper.setIsLike("false");
+//            }
+//            else {
+//                System.out.println("1111111111111111111111111111111111");
+//                participantMapper.setIsLike("true");
+//            }
+//        return participantMapper;
+//    }
 
     @ModelAttribute("participants")
     List<Participant> getOneParticipant(){
@@ -137,7 +173,7 @@ public class ProfilesEndpoint {
     }
 
 //    @ModelAttribute("loggedUserName")
-//    String principal(Principal principal) {
+//    String prin(Principal principal) {
 //        String text =" ";
 //        if(principal != null){
 //            text += "Welcome " + principal.getName();
