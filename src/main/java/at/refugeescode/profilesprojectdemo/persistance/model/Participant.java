@@ -44,8 +44,8 @@ public class Participant {
     private Boolean dislike;
 
     //@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Company> companyList;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private Set<Company> companyList;
 
 
     public Participant() {
@@ -117,32 +117,6 @@ public class Participant {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Set<Company> getCompanyList() {
-        return companyList;
-    }
-
-    public void setCompanyList(Set<Company> companyList) {
-        this.companyList = companyList;
-    }
-
-    public void addCompany(Company company){
-        companyList.add(company);
-    }
-
-    public void removeCompany(Company company){
-        companyList.remove(company);
-    }
-
-    public String showCompanyName(){
-      return   companyList.stream().map(company -> company.getName())
-                .collect(Collectors.joining(", "));
-    }
-
-    public String showCompanyId(){
-        return   companyList.stream().map(company -> company.getId().toString())
-                .collect(Collectors.joining(", "));
     }
 
     public String getGithub() {

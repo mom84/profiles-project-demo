@@ -1,5 +1,4 @@
 package at.refugeescode.profilesprojectdemo.persistance.model;
-import at.refugeescode.profilesprojectdemo.persistance.mapper.ParticipantMapper;
 import at.refugeescode.profilesprojectdemo.persistance.repository.AdminRepository;
 import at.refugeescode.profilesprojectdemo.persistance.repository.CompanyRepository;
 import at.refugeescode.profilesprojectdemo.persistance.repository.ProfilesRepository;
@@ -47,18 +46,22 @@ public class ProfilesEndpoint {
 
     private PasswordEncoder passwordEncoder;
 
+    private Interests interests;
+
     private List<Participant> participants = new ArrayList<>();
 
     private Participant participant;
 
 
-    public ProfilesEndpoint( ProfilesRepository profilesRepository, CompanyRepository companyRepository, AdminRepository adminRepository, EmailService emailService, PasswordEncoder passwordEncoder, Participant participant, List<Participant> participants) {
+    public ProfilesEndpoint(ProfilesRepository profilesRepository, CompanyRepository companyRepository, AdminRepository adminRepository, EmailService emailService, PasswordEncoder passwordEncoder, Interests interests, List<Participant> participants, Participant participant) {
         this.profilesRepository = profilesRepository;
         this.companyRepository = companyRepository;
         this.adminRepository = adminRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
+        this.interests = interests;
         this.participants = participants;
+        this.participant = participant;
 
     }
 
@@ -66,7 +69,6 @@ public class ProfilesEndpoint {
     String page1(){
         return "showParticipants";
     }
-
 
     @GetMapping("/addParticipant")
     String page2(){
@@ -104,38 +106,6 @@ public class ProfilesEndpoint {
        return profilesRepository.findAll();
    }
 
-//    @ModelAttribute("allList")
-//    List<ParticipantMapper> getAllParticipant(){
-//         List<Participant> all= profilesRepository.findAll();
-//         return all.stream().map(p-> converttoMapper(p)).collect(Collectors.toList());
-//    }
-//
-//    private ParticipantMapper converttoMapper(Participant p) {
-//
-//        ParticipantMapper participantMapper = new ParticipantMapper();
-//        UserPrincipal userPrincipal = new UserPrincipal();
-//
-//        participantMapper.setId(p.getId());
-//        participantMapper.setName(p.getName());
-//        participantMapper.setEmail(p.getEmail());
-//        participantMapper.setAddress(p.getAddress());
-//        participantMapper.setEducation(p.getEducation());
-//        participantMapper.setImage(p.getImage());
-//        Stream<Company> stream = p.getCompanyList().stream();
-//        System.out.println("sssssssssssss"+ userPrincipal.getCompany());
-//
-//            long count = stream.filter(company -> company.getName().equalsIgnoreCase(userPrincipal.getCompany().getName())).count();
-//            System.out.println("ggggggggggggggggggg");
-//            if (count == 0) {
-//                System.out.println("000000000000000000000000000000");
-//                participantMapper.setIsLike("false");
-//            }
-//            else {
-//                System.out.println("1111111111111111111111111111111111");
-//                participantMapper.setIsLike("true");
-//            }
-//        return participantMapper;
-//    }
 
     @ModelAttribute("participants")
     List<Participant> getOneParticipant(){
@@ -180,6 +150,17 @@ public class ProfilesEndpoint {
 //        }
 //        return text;
 //    }
+
+    @ModelAttribute("interestedParticipants")
+    List<Participant> interestedParticipants(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        if(userPrincipal == null){
+            return null;
+        }
+       else {
+            return interests.getInterestedParticipants(userPrincipal.getCompany().getId());
+    }
+
+    }
 
     @ModelAttribute("loggedCompanyName")
     String principal(@AuthenticationPrincipal UserPrincipal principal) {
@@ -295,51 +276,67 @@ public class ProfilesEndpoint {
 //    }
 
 
-    @PostMapping("like")
-    String like(Principal principal, @RequestParam String id1) throws MessagingException {
-        Optional<Participant> participant = profilesRepository.findById(Long.valueOf(id1));
-        if (participant.isPresent()) {
-            Optional<Company> CompanyUsername = companyRepository.findOneByUsername(principal.getName());
-            if (CompanyUsername.isPresent()) {
-                    participant.get().addCompany(CompanyUsername.get());
-                participant.get().setLike(true);
-                participant.get().setDislike(false);
-                log.info("Spring Mail - Sending Email with Inline Attachment Example");
+//    @PostMapping("like")
+//    String like(Principal principal, @RequestParam String id1) throws MessagingException {
+//        Optional<Participant> participant = profilesRepository.findById(Long.valueOf(id1));
+//        if (participant.isPresent()) {
+//            Optional<Company> CompanyUsername = companyRepository.findOneByUsername(principal.getName());
+//            if (CompanyUsername.isPresent()) {
+//                    participant.get().addCompany(CompanyUsername.get());
+//                participant.get().setLike(true);
+//                participant.get().setDislike(false);
+//                log.info("Spring Mail - Sending Email with Inline Attachment Example");
+//
+//                Mail mail = new Mail();
+//                mail.setFrom("no-reply@memorynotfound.com");
+//                mail.setTo("mohammadalmosleh66@gmail.com");
+//                //mail.setTo(CompanyUsername.get().getEmail());
+//                mail.setSubject("Sending Email with Inline Attachment Example");
+//                mail.setContent( CompanyUsername.get().getName()+" is very interested in " + participant.get().getName());
+//                emailService.sendSimpleMessage(mail);
+//                companyRepository.save(CompanyUsername.get());
+//            }
+//        }
+//        return "redirect:/";
+//    }
+//
+//
+//    @DeleteMapping("dislike")
+//    String dislike(@RequestParam String idCompany , @RequestParam String idParticipant,Principal principal) throws MessagingException {
+//        Optional<Participant> participant = profilesRepository.findById(Long.valueOf(idParticipant));
+//        Optional<Company> company = companyRepository.findOneByUsername(principal.getName());
+//        if(company.isPresent()){
+//            if(participant.get().getCompanyList().contains(company.get())) {
+//                participant.get().removeCompany(company.get());
+//            }
+//            Mail mail = new Mail();
+//            mail.setFrom("no-reply@memorynotfound.com");
+//            //set the person name that you want to send to.
+//            mail.setTo("mohammadalmosleh66@gmail.com");
+//            mail.setSubject("Sending Email with Inline Attachment Example");
+//            mail.setContent( company.get().getName()+" NOT interested in " + participant.get().getName()+" any more");
+//
+//            emailService.sendSimpleMessage(mail);
+//            participant.get().setLike(false);
+//            participant.get().setDislike(true);
+//            profilesRepository.save(participant.get());
+//        }
+//        return "redirect:/";
+//    }
 
-                Mail mail = new Mail();
-                mail.setFrom("no-reply@memorynotfound.com");
-                mail.setTo("mohammadalmosleh66@gmail.com");
-                //mail.setTo(CompanyUsername.get().getEmail());
-                mail.setSubject("Sending Email with Inline Attachment Example");
-                mail.setContent( CompanyUsername.get().getName()+" is very interested in " + participant.get().getName());
-                emailService.sendSimpleMessage(mail);
-                companyRepository.save(CompanyUsername.get());
-            }
-        }
+    @PostMapping("like")
+    String interested(@RequestParam Long id, @AuthenticationPrincipal UserPrincipal principal) {
+        Long userId = principal.getCompany().getId();
+        Long participantId = id;
+        interests.interested(userId, participantId);
         return "redirect:/";
     }
 
-
-    @DeleteMapping("dislike")
-    String dislike(@RequestParam String idCompany , @RequestParam String idParticipant,Principal principal) throws MessagingException {
-        Optional<Participant> participant = profilesRepository.findById(Long.valueOf(idParticipant));
-        Optional<Company> company = companyRepository.findOneByUsername(principal.getName());
-        if(company.isPresent()){
-            if(participant.get().getCompanyList().contains(company.get())) {
-                participant.get().removeCompany(company.get());
-            }
-            Mail mail = new Mail();
-            mail.setFrom("no-reply@memorynotfound.com");
-            //set the person name that you want to send to.
-            mail.setTo("mohammadalmosleh66@gmail.com");
-            mail.setSubject("Sending Email with Inline Attachment Example");
-            mail.setContent( company.get().getName()+" NOT interested in " + participant.get().getName()+" any more");
-
-            emailService.sendSimpleMessage(mail);
-            participant.get().setLike(false);
-            participant.get().setDislike(true);
-            profilesRepository.save(participant.get());
-        }
+    @PostMapping("dislike")
+    String notInterested(@RequestParam Long id, @AuthenticationPrincipal UserPrincipal principal) {
+        Long userId = principal.getCompany().getId();
+        Long participantId = id;
+        interests.notInterested(userId, participantId);
         return "redirect:/";
     }
 

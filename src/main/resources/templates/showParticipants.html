@@ -29,20 +29,20 @@
 </center>
 
 
+
 <center>
     <div>
-        <table id="customers" th:if="${not #lists.isEmpty(allList)}" align="center">
+        <table id="customers" th:if="${not #lists.isEmpty(allList)}" align="center" th:each="list : ${allList}">
             <thead>
             <tr>
-
                 <th>name</th>
                 <th>email</th>
                 <th>phone</th>
                 <th sec:authorize="hasAuthority('USER')">address</th>
                 <th>specialization</th>
                 <th sec:authorize="hasAuthority('ADMIN')">companies that interested</th>
-                <th sec:authorize="hasAuthority('USER')">like</th>
-                <th sec:authorize="hasAuthority('USER')">dislike</th>
+                <th sec:authorize="hasAuthority('USER')">Interested</th>
+               <!-- <th sec:authorize="hasAuthority('USER')">dislike</th> -->
                 <th sec:authorize="hasAuthority('ADMIN')">edit</th>
                 <th sec:authorize="hasAuthority('ADMIN')">delete</th>
                 <th>profile</th>
@@ -59,26 +59,16 @@
                 <td th:text="${list.address}" sec:authorize="hasAuthority('USER')">address</td>
                 <td th:text="${list.specialization}">specialization</td>
 
-               <!--
-                <td th:text="${list.showCompanyName()}" sec:authorize="hasAuthority('ADMIN')">specialization</td>
+                <!--th:disabled="${!list.dislike}"-->
+                <form th:unless="${interestedParticipants.contains(list)}" th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
+                     <td style="display:none"><input type="text" name="id" th:value="${list.id}"/></td>
+                     <td><input type="submit"  value="I'm Interested"></td>
+                 </form>
 
-                <div   th:if="${list.isLike}=='false'" >
-                </div>
-                 -->
-
-                    <form th:action="@{/like}" th:method="post" sec:authorize="hasAuthority('USER')">
-                        <td style="display:none"><input type="text" name="id1" th:value="${list.id}"/></td>
-                        <td><input type="submit"  th:text="${#lists.contains(list.companyList)}" value="I'm Interested"></td>
-                    </form>
-
-                <!--
-                <div   th:if="${list.isLike}=='true'" >
-                </div>
-                -->
-                <form th:action="@{/dislike}" th:method="Delete" sec:authorize="hasAuthority('USER')">
-                    <td style="display:none"><input type="text" name="idCompany" th:value="${list.showCompanyId()}"/></td>
-                    <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
-                    <td><input type="submit" th:disabled="${list.dislike}" value="I'm not Interested"></td>
+                <form th:if="${interestedParticipants.contains(list)}" th:action="@{/dislike}" th:method="post" sec:authorize="hasAuthority('USER')">
+                   <!-- <td style="display:none"><input type="text" name="idCompany" th:value="${list.showCompanyId()}"/></td>-->
+                    <td style="display:none"><input type="text" name="id" th:value="${list.id}"/></td>
+                    <td><input type="submit"  value="I'm not Interested"></td>
                 </form>
 
                 <form th:action="@{/update}" th:method="post"  sec:authorize="hasAuthority('ADMIN')">
@@ -94,7 +84,7 @@
                     <td style="display:none"><input type="text" name="idParticipant" th:value="${list.id}"/></td>
                     <td><input type="submit" value="Profile" ></td>
                 </form>
-                <td > <img  th:src="@{${'/images/' + list.image}}" height="150px" width="220px" /> </td>
+                <td><img  th:src="@{${'/images/' + list.image}}" height="150px" width="220px" /> </td>
             </tr>
             </tbody>
         </table>
@@ -103,6 +93,12 @@
 
 <br>
 <br>
+
+<!--<h3>Interested participants</h3>-->
+<!--<ul>-->
+    <!--<li th:each="interested : ${interestedParticipants}" th:text="${interested.name}">Guillermo</li>-->
+<!--</ul>-->
+
 
 <!--
 <center>
